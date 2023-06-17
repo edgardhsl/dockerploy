@@ -1,0 +1,1 @@
+class EnvironmentNotFoundException implements Exception {}
