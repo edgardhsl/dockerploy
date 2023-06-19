@@ -10,7 +10,7 @@ class ProcessRunner implements Process {
 
     return runner
         .map((value) => ProcessResponse(
-            stdOut: value.stdout as String, stdErr: value.stdout as String))
+            stdOut: value.stdout as String, stdErr: value.stderr as String))
         .toList();
   }
 }

@@ -11,8 +11,9 @@ class AppModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => Configuration()),
+        ChildRoute('/configuration',
+            child: (context, args) => const Configuration()),
         ChildRoute('/start', child: (context, args) => StartPage()),
-        ChildRoute('/aaa', child: (context, args) => const SplashScreen())
+        ChildRoute('/', child: (context, args) => const SplashScreen())
       ];
 }

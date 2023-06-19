@@ -17,6 +17,13 @@ dependencies:
   reactive_forms: 
   reflectable: 
   process_run:
+  google_fonts:
+  simple_icons:
+  styled_widget:
+  window_size:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
 
   cupertino_icons: ^1.0.2
 

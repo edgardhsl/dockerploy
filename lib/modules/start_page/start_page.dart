@@ -93,7 +93,7 @@ class StartPage extends StatelessWidget {
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Row(children: [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Text(
                 "Ambientes (${envs.length})",
                 style:
