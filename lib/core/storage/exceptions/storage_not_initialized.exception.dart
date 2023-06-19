@@ -1,0 +1,1 @@
+class StorageNotInitializedException implements Exception {}
