@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _validate() async {
     try {
-      await storage.getEnv();
+      storage.getEnv();
 
       Modular.to.navigate("/start");
     } on EnvironmentNotFoundException {

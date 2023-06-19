@@ -13,7 +13,7 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute('/configuration',
             child: (context, args) => const Configuration()),
-        ChildRoute('/start', child: (context, args) => StartPage()),
+        ChildRoute('/start', child: (context, args) => const StartPage()),
         ChildRoute('/', child: (context, args) => const SplashScreen())
       ];
 }

@@ -33,38 +33,38 @@ class GithubUser {
   String? updatedAt;
 
   GithubUser(
-      {login,
-      id,
-      nodeId,
-      avatarUrl,
-      gravatarId,
-      url,
-      htmlUrl,
-      followersUrl,
-      followingUrl,
-      gistsUrl,
-      starredUrl,
-      subscriptionsUrl,
-      organizationsUrl,
-      reposUrl,
-      eventsUrl,
-      receivedEventsUrl,
-      type,
-      siteAdmin,
-      name,
-      company,
-      blog,
-      location,
-      email,
-      hireable,
-      bio,
-      twitterUsername,
-      publicRepos,
-      publicGists,
-      followers,
-      following,
-      createdAt,
-      updatedAt});
+      {required this.login,
+      this.id,
+      this.nodeId,
+      this.avatarUrl,
+      this.gravatarId,
+      this.url,
+      this.htmlUrl,
+      this.followersUrl,
+      this.followingUrl,
+      this.gistsUrl,
+      this.starredUrl,
+      this.subscriptionsUrl,
+      this.organizationsUrl,
+      this.reposUrl,
+      this.eventsUrl,
+      this.receivedEventsUrl,
+      this.type,
+      this.siteAdmin,
+      this.name,
+      this.company,
+      this.blog,
+      this.location,
+      this.email,
+      this.hireable,
+      this.bio,
+      this.twitterUsername,
+      this.publicRepos,
+      this.publicGists,
+      this.followers,
+      this.following,
+      this.createdAt,
+      this.updatedAt});
 
   GithubUser.fromJson(Map<String, dynamic> json) {
     login = json['login'];
@@ -102,7 +102,7 @@ class GithubUser {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['login'] = login;
     data['id'] = id;
     data['node_id'] = nodeId;

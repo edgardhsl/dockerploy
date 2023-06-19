@@ -59,6 +59,5 @@ class _GithubUserCardState extends State<GithubUserCard> {
         .padding(vertical: 12)
         .scale(all: pressed ? 0.95 : 1.0, animate: true)
         .animate(const Duration(milliseconds: 150), Curves.easeOut);
-    ;
   }
 }

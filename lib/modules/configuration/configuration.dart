@@ -33,14 +33,14 @@ class _ConfigurationState extends State<Configuration> {
 
   @override
   void initState() {
-    _executeProccess();
+    _executeProcess();
     _loadForm();
     super.initState();
   }
 
   _loadForm() async {
     try {
-      GitEnvironment env = await storage.getEnv();
+      GitEnvironment env = storage.getEnv();
       formGroup.patchValue(env.toMap());
     } on EnvironmentNotFoundException catch (e) {
       log(e.toString());
@@ -54,11 +54,25 @@ class _ConfigurationState extends State<Configuration> {
     Modular.to.navigate("../");
   }
 
-  _executeProccess() async {
-    PlatformFactory().getWSL().isInstalled().then((value) => setState(
-        () => isWSL = value ? PlatformState.enabled : PlatformState.disabled));
-    PlatformFactory().getDocker().isInstalled().then((value) => setState(() =>
-        isDocker = value ? PlatformState.enabled : PlatformState.disabled));
+  Future<void> _executeProcess() async {
+    final wslPlatform = PlatformFactory().getWSL();
+    final dockerPlatform = PlatformFactory().getDocker();
+
+    await wslPlatform.isInstalled().then((b) {
+      setState(() {
+        isWSL = _isEnabled(b);
+      });
+    });
+
+    await dockerPlatform.isInstalled().then((b) {
+      setState(() {
+        isDocker = _isEnabled(b);
+      });
+    });
+  }
+
+  _isEnabled(bool b) {
+    return b ? PlatformState.enabled : PlatformState.disabled;
   }
 
   _isOk(PlatformState isOk) {
@@ -166,9 +180,9 @@ class _ConfigurationState extends State<Configuration> {
                 ],
               ),
               StreamBuilder<GithubUser>(
-                stream: Stream.empty(),
+                stream: const Stream.empty(),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) return Text("a");
+                  if (!snapshot.hasData) return const Text("a");
 
                   return Row(
                     children: [

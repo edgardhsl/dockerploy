@@ -17,7 +17,7 @@ class SharedPreferences implements Storage {
   }
 
   @override
-  Future<GitEnvironment> getEnv() async {
+  GitEnvironment getEnv() {
     if (prefs == null) throw StorageNotInitializedException();
     if (prefs!.getString("env") == null) throw EnvironmentNotFoundException();
 
@@ -25,7 +25,7 @@ class SharedPreferences implements Storage {
   }
 
   @override
-  Future<Environment> getEnvContainer(String name) async {
+  Environment getEnvContainer(String name) {
     if (prefs == null) throw StorageNotInitializedException();
     if (prefs!.getString("name") == null) throw EnvironmentNotFoundException();
 

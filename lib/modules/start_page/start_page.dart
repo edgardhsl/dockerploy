@@ -2,74 +2,34 @@ import 'dart:ui';
 
 import 'package:dockerploy/core/storage/environment.dart';
 import 'package:dockerploy/core/storage/storage.dart.dart';
+import 'package:dockerploy/modules/start_page/create_environment.widget.dart';
+import 'package:dockerploy/modules/start_page/environment_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class StartPage extends StatelessWidget {
+class StartPage extends StatefulWidget {
+  const StartPage({Key? key}) : super(key: key);
+
+  @override
+  State<StartPage> createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
   Storage storage = Modular.get<Storage>();
 
   final ScrollController _scrollBarController =
       ScrollController(initialScrollOffset: 20);
 
-  List<Environment> envs = [
-    Environment(
-        protocol: "http",
-        apiroot: "api/v2",
-        host: "localhost",
-        saltMD5: "none",
-        encryptType: "",
-        port: 8080,
-        context: "mobilidade",
-        frontBranch: "master"),
-    Environment(
-        protocol: "http",
-        apiroot: "api/v2",
-        host: "localhost",
-        saltMD5: "none",
-        encryptType: "",
-        port: 8080,
-        context: "mobilidade",
-        frontBranch: "master"),
-  ];
+  List<Environment> envs = [];
 
-  StartPage({Key? key}) : super(key: key);
-
-  _card(BuildContext context, int index) {
-    final width = MediaQuery.of(context).size.width - 80;
-
-    return SizedBox(
-      width: 300,
-      child: Card(
-        color: Colors.grey[200], // Cor cinza clara
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Bordas arredondadas
-        ),
-        child: ListTile(
-          title: Text(
-            'Ambiente ${index + 1}',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () => {},
-                child: Text(
-                  envs[index].getFrontEndUrl(),
-                  style: const TextStyle(color: Colors.blueAccent),
-                ),
-              ),
-              GestureDetector(
-                child: Text(
-                  envs[index].getBackEndUrl(),
-                  style: const TextStyle(color: Colors.blueAccent),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+  _create(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: CreateEnvironment(),
+          );
+        });
   }
 
   @override
@@ -77,7 +37,7 @@ class StartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: FutureBuilder(
-          future: storage.getEnv(),
+          future: Future.value(storage.getEnv()),
           builder: (context, snapshot) => Padding(
             padding: const EdgeInsets.only(top: 20, left: 15),
             child: Text(
@@ -99,21 +59,40 @@ class StartPage extends StatelessWidget {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-            )
+            ),
+            const Spacer(),
+            Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(children: [
+                  IconButton(
+                    color: Colors.white,
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      _create(context);
+                    },
+                  )
+                ]))
           ]),
           SizedBox(
-            height: 200,
+            height: 330,
             child: ScrollConfiguration(
                 behavior: MyCustomScrollBehavior(),
-                child: ListView.builder(
-                  controller: _scrollBarController,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: envs.length,
-                  itemBuilder: (context, index) {
-                    return _card(context, index);
-                  },
-                )),
+                child: envs.isNotEmpty
+                    ? ListView.builder(
+                        controller: _scrollBarController,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: envs.length,
+                        itemBuilder: (context, index) {
+                          return EnvironmentCard(
+                            env: envs[index],
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text(
+                        "Iiiihhh, nenhum ambiente configurado ainda. 🥲",
+                      ))),
           )
         ]),
       ),
