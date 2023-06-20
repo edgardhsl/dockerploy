@@ -1,4 +1,3 @@
-
 import 'package:dockerploy/modules/app_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -6,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'main.reflectable.dart';
 
 void main() {
-  /* WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  /* 
 
   if (Platform.isWindows) {
     setWindowMaxSize(const Size(1024, 768));

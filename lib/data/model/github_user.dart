@@ -1,3 +1,6 @@
+import 'package:dockerploy/core/util/reflector/reflector.dart';
+
+@Reflector()
 class GithubUser {
   String? login;
   int? id;

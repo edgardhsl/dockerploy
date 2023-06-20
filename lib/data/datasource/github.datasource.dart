@@ -11,7 +11,7 @@ class GithubDataSource {
 
   GithubDataSource(httpClient);
 
-  Future<dynamic> getRepositories<T>(GithubUser user) async {
+  Future<T> getRepositories<T>(GithubUser user) async {
     var url = Uri.https(baseUrl, "${user.login}/repositories");
     var response =
         await http.get(url, headers: {"Authorization": env.getEnv().token});
