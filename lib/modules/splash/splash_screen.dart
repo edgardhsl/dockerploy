@@ -1,17 +1,20 @@
+import 'package:dockerploy/core/database/isar/isar.impl.dart';
 import 'package:dockerploy/core/storage/exceptions/environment_not_found.exception.dart';
 import 'package:dockerploy/core/storage/storage.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:isar/isar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   Storage storage = Modular.get<Storage>();
+  IsarDatabase database = Modular.get<IsarDatabase>();
 
   @override
   void initState() {
@@ -25,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     try {
       storage.getEnv();
 
-      Modular.to.navigate("/start");
+      database.initialize().then((value) => Modular.to.navigate("/start"));
     } on EnvironmentNotFoundException {
       showAlertDialog();
     }
@@ -35,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Widget launchButton = TextButton(
       child: const Text("Sim"),
       onPressed: () {
-        Modular.to.navigate("/configuration");
+        Modular.to.navigate("/settings");
       },
     );
     // set up the AlertDialog

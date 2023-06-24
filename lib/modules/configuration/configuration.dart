@@ -1,14 +1,13 @@
 import 'dart:developer';
 
+import 'package:dockerploy/data/model/git_environment.dart';
 import 'package:dockerploy/data/model/github_user.dart';
 import 'package:dockerploy/modules/configuration/github_user_card.widget.dart';
 import "package:simple_icons/simple_icons.dart";
-
 import 'package:dockerploy/core/builders/form/formgroup.builder.dart';
 import 'package:dockerploy/core/platform/features/platform.factory.dart';
 import 'package:dockerploy/core/platform/features/platform_features.dart';
 import 'package:dockerploy/core/storage/exceptions/environment_not_found.exception.dart';
-import 'package:dockerploy/core/storage/git_environment.dart';
 import 'package:dockerploy/core/storage/storage.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -26,7 +25,7 @@ class _ConfigurationState extends State<Configuration> {
   FormGroup formGroup = CustomFormBuilder<GitEnvironment>().create(validators: {
     "user": [Validators.required],
     "token": [Validators.required],
-  });
+  }).formGroup;
 
   PlatformState isWSL = PlatformState.loading;
   PlatformState isDocker = PlatformState.loading;

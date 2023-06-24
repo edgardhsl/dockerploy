@@ -6,26 +6,47 @@ class CustomFormBuilder<T> {
   final _reflector = const Reflector();
   final _formGroup = FormGroup({});
 
+  get formGroup => _formGroup;
+
   CustomFormBuilder();
 
-  FormGroup create({required Map<String, List<Validator>> validators}) {
+  CustomFormBuilder create({required Map<String, List<Validator>> validators}) {
+    _process(parentControl: _formGroup, validators: validators);
+    _getValidators(_formGroup, validators);
+
+    return this;
+  }
+
+  _process(
+      {Type? parentClass,
+      AbstractControl? parentControl,
+      required Map<String, List<Validator>> validators}) {
+    ClassMirror mirror = (parentClass == null
+        ? _reflector.reflectType(T)
+        : _reflector.reflectType(parentClass)) as ClassMirror;
+
     final controls = <String, AbstractControl>{};
-
-    ClassMirror mirror = _reflector.reflectType(T) as ClassMirror;
-
     mirror.declarations.forEach((key, value) {
       if (value is VariableMirror) {
         AbstractControl control = _createControl(value);
-        final validations = _getValidators(key, validators);
-        control.setValidators(validations);
-        control.updateValueAndValidity();
+
+        if (control is FormGroup) {
+          _process(
+              parentClass: value.reflectedType,
+              parentControl: control,
+              validators: validators);
+
+          controls.putIfAbsent(key, () => control);
+          return;
+        }
 
         controls.putIfAbsent(key, () => control);
       }
     });
 
-    _formGroup.addAll(controls);
-    return _formGroup;
+    (parentControl as FormGroup).addAll(controls);
+
+    return this;
   }
 
   static void update(FormGroup form, Map<String, dynamic> values) {
@@ -37,7 +58,7 @@ class CustomFormBuilder<T> {
   }
 
   List<Validator> _getValidators(
-      String key, Map<String, List<Validator>>? validators) {
+      FormGroup formGroup, Map<String, List<Validator>>? validators) {
     try {
       if (validators == null) {
         return [];
@@ -46,9 +67,8 @@ class CustomFormBuilder<T> {
       List<Validator> controlValidators = [];
 
       for (final MapEntry validators in validators.entries) {
-        if (validators.key == key) {
-          controlValidators = validators.value;
-        }
+        formGroup.control(validators.key).setValidators(validators.value);
+        formGroup.control(validators.key).updateValueAndValidity();
       }
 
       return controlValidators;
@@ -76,7 +96,7 @@ class CustomFormBuilder<T> {
       case bool:
         return FormControl<bool>();
       default:
-        return FormControl<Object>();
+        return FormGroup({});
     }
   }
 
@@ -88,6 +108,8 @@ class CustomFormBuilder<T> {
       if (value is! VariableMirror) return;
       _formGroup.control(key).value = entityMirror.invokeGetter(key);
     });
+
+    return this;
   }
 
   static bool validateControls(

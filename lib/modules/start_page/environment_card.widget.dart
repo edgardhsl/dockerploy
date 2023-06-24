@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:dockerploy/core/storage/environment.dart';
+import 'package:dockerploy/data/model/environment.dart';
 
 class EnvironmentCard extends StatelessWidget {
   final Environment env;

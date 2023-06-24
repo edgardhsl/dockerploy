@@ -1,5 +1,5 @@
-import 'package:dockerploy/core/storage/Environment.dart';
-import 'package:dockerploy/core/storage/git_environment.dart';
+import 'package:dockerploy/data/model/environment.dart';
+import 'package:dockerploy/data/model/git_environment.dart';
 
 abstract class Storage {
   void setEnv(GitEnvironment env);
