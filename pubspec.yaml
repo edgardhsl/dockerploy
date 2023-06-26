@@ -15,7 +15,6 @@ dependencies:
   isar: 3.1.0
   isar_flutter_libs: 3.1.0
   json_annotation: any
-  objectbox_flutter_libs: any
   path_provider: any
   process_run: any
   reactive_dropdown_search: any

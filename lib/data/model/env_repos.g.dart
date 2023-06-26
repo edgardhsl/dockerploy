@@ -13,24 +13,24 @@ const EnvReposSchema = Schema(
   name: r'EnvRepos',
   id: -5289350265363785876,
   properties: {
-    r'idBackBranch': PropertySchema(
+    r'idBackend': PropertySchema(
       id: 0,
-      name: r'idBackBranch',
+      name: r'idBackend',
       type: IsarType.string,
     ),
-    r'idBackRepository': PropertySchema(
+    r'idBranchBackend': PropertySchema(
       id: 1,
-      name: r'idBackRepository',
+      name: r'idBranchBackend',
       type: IsarType.string,
     ),
-    r'idFrontBranch': PropertySchema(
+    r'idBranchFrontend': PropertySchema(
       id: 2,
-      name: r'idFrontBranch',
+      name: r'idBranchFrontend',
       type: IsarType.string,
     ),
-    r'idFrontRepository': PropertySchema(
+    r'idFrontend': PropertySchema(
       id: 3,
-      name: r'idFrontRepository',
+      name: r'idFrontend',
       type: IsarType.string,
     )
   },
@@ -47,25 +47,25 @@ int _envReposEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.idBackBranch;
+    final value = object.idBackend;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   {
-    final value = object.idBackRepository;
+    final value = object.idBranchBackend;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   {
-    final value = object.idFrontBranch;
+    final value = object.idBranchFrontend;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   {
-    final value = object.idFrontRepository;
+    final value = object.idFrontend;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -79,10 +79,10 @@ void _envReposSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.idBackBranch);
-  writer.writeString(offsets[1], object.idBackRepository);
-  writer.writeString(offsets[2], object.idFrontBranch);
-  writer.writeString(offsets[3], object.idFrontRepository);
+  writer.writeString(offsets[0], object.idBackend);
+  writer.writeString(offsets[1], object.idBranchBackend);
+  writer.writeString(offsets[2], object.idBranchFrontend);
+  writer.writeString(offsets[3], object.idFrontend);
 }
 
 EnvRepos _envReposDeserialize(
@@ -92,10 +92,10 @@ EnvRepos _envReposDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = EnvRepos(
-    idBackBranch: reader.readStringOrNull(offsets[0]),
-    idBackRepository: reader.readStringOrNull(offsets[1]),
-    idFrontBranch: reader.readStringOrNull(offsets[2]),
-    idFrontRepository: reader.readStringOrNull(offsets[3]),
+    idBackend: reader.readStringOrNull(offsets[0]),
+    idBranchBackend: reader.readStringOrNull(offsets[1]),
+    idBranchFrontend: reader.readStringOrNull(offsets[2]),
+    idFrontend: reader.readStringOrNull(offsets[3]),
   );
   return object;
 }
@@ -122,38 +122,36 @@ P _envReposDeserializeProp<P>(
 
 extension EnvReposQueryFilter
     on QueryBuilder<EnvRepos, EnvRepos, QFilterCondition> {
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchIsNull() {
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'idBackBranch',
+        property: r'idBackend',
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackBranchIsNotNull() {
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'idBackBranch',
+        property: r'idBackend',
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchEqualTo(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackBranchGreaterThan(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -161,14 +159,14 @@ extension EnvReposQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchLessThan(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -176,14 +174,14 @@ extension EnvReposQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchBetween(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -192,7 +190,7 @@ extension EnvReposQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'idBackBranch',
+        property: r'idBackend',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -202,103 +200,101 @@ extension EnvReposQueryFilter
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackBranchStartsWith(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchEndsWith(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchContains(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackBranchMatches(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'idBackBranch',
+        property: r'idBackend',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackBranchIsEmpty() {
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idBackendIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: '',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackBranchIsNotEmpty() {
+      idBackendIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'idBackBranch',
+        property: r'idBackend',
         value: '',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryIsNull() {
+      idBranchBackendIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryIsNotNull() {
+      idBranchBackendIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryEqualTo(
+      idBranchBackendEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -306,7 +302,7 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryGreaterThan(
+      idBranchBackendGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -314,7 +310,7 @@ extension EnvReposQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -322,7 +318,7 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryLessThan(
+      idBranchBackendLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -330,7 +326,7 @@ extension EnvReposQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -338,7 +334,7 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryBetween(
+      idBranchBackendBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -347,7 +343,7 @@ extension EnvReposQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -358,13 +354,13 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryStartsWith(
+      idBranchBackendStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -372,13 +368,13 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryEndsWith(
+      idBranchBackendEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -386,10 +382,10 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryContains(String value, {bool caseSensitive = true}) {
+      idBranchBackendContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -397,10 +393,10 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryMatches(String pattern, {bool caseSensitive = true}) {
+      idBranchBackendMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -408,50 +404,51 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryIsEmpty() {
+      idBranchBackendIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: '',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idBackRepositoryIsNotEmpty() {
+      idBranchBackendIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'idBackRepository',
+        property: r'idBranchBackend',
         value: '',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontBranchIsNull() {
+      idBranchFrontendIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontBranchIsNotNull() {
+      idBranchFrontendIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontBranchEqualTo(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -459,7 +456,7 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontBranchGreaterThan(
+      idBranchFrontendGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -467,14 +464,15 @@ extension EnvReposQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontBranchLessThan(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -482,14 +480,15 @@ extension EnvReposQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontBranchBetween(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -498,7 +497,7 @@ extension EnvReposQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -509,225 +508,218 @@ extension EnvReposQueryFilter
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontBranchStartsWith(
+      idBranchFrontendStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontBranchEndsWith(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'idFrontBranch',
+        property: r'idBranchFrontend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontBranchContains(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'idBranchFrontend',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'idBranchFrontend',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'idBranchFrontend',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idBranchFrontendIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'idBranchFrontend',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'idFrontend',
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
+      idFrontendIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'idFrontend',
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'idFrontend',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'idFrontend',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'idFrontend',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'idFrontend',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'idFrontend',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'idFrontend',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'idFrontBranch',
+        property: r'idFrontend',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontBranchMatches(
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'idFrontBranch',
+        property: r'idFrontend',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontBranchIsEmpty() {
+  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition> idFrontendIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idFrontBranch',
+        property: r'idFrontend',
         value: '',
       ));
     });
   }
 
   QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontBranchIsNotEmpty() {
+      idFrontendIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'idFrontBranch',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'idFrontRepository',
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'idFrontRepository',
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idFrontRepository',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'idFrontRepository',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'idFrontRepository',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'idFrontRepository',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'idFrontRepository',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'idFrontRepository',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'idFrontRepository',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'idFrontRepository',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'idFrontRepository',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<EnvRepos, EnvRepos, QAfterFilterCondition>
-      idFrontRepositoryIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'idFrontRepository',
+        property: r'idFrontend',
         value: '',
       ));
     });
@@ -742,15 +734,15 @@ extension EnvReposQueryObject
 // **************************************************************************
 
 EnvRepos _$EnvReposFromJson(Map<String, dynamic> json) => EnvRepos(
-      idBackBranch: json['idBackBranch'] as String?,
-      idBackRepository: json['idBackRepository'] as String?,
-      idFrontBranch: json['idFrontBranch'] as String?,
-      idFrontRepository: json['idFrontRepository'] as String?,
+      idBranchFrontend: json['idBranchFrontend'] as String?,
+      idBranchBackend: json['idBranchBackend'] as String?,
+      idFrontend: json['idFrontend'] as String?,
+      idBackend: json['idBackend'] as String?,
     );
 
 Map<String, dynamic> _$EnvReposToJson(EnvRepos instance) => <String, dynamic>{
-      'idFrontRepository': instance.idFrontRepository,
-      'idFrontBranch': instance.idFrontBranch,
-      'idBackRepository': instance.idBackRepository,
-      'idBackBranch': instance.idBackBranch,
+      'idFrontend': instance.idFrontend,
+      'idBackend': instance.idBackend,
+      'idBranchFrontend': instance.idBranchFrontend,
+      'idBranchBackend': instance.idBranchBackend,
     };

@@ -1,43 +1,49 @@
 import 'package:dockerploy/core/database/isar/isar.impl.dart';
 import 'package:dockerploy/data/model/environment.dart';
 import 'package:dockerploy/data/repositories/environment.repository.dart';
+import 'package:isar/isar.dart';
 
 class EnvironmentRepositoryImpl implements EnvironmentRepository {
-  EnvironmentRepositoryImpl(IsarDatabase isar) {
+  IsarDatabase isar;
+
+  EnvironmentRepositoryImpl(this.isar) {
     init();
   }
 
   init() async {}
 
   @override
-  Future<Environment> create(Environment environment) {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future<Environment> create(Environment environment) async {
+    await isar.isar!.writeTxn(() => isar.isar!.environments.put(environment));
+    return environment;
   }
 
   @override
-  Future<bool> delete(Environment environment) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<bool> delete(Environment environment) async {
+    await isar.isar!.writeTxn(
+        () => isar.isar!.environments.delete(environment.id!.toInt()));
+    return true;
   }
 
   @override
-  Future<Environment> get(String name) {
-    // TODO: implement get
-    throw UnimplementedError();
+  Future<Environment?> get(String name) {
+    return isar.isar!.environments.filter().nameEqualTo(name).findFirst();
   }
 
   @override
-  Future<List<Environment>> list() {
-    // TODO: implement list
-    throw UnimplementedError();
+  Future<List<Environment>?> list() {
+    return isar.isar!.environments.where().findAll();
   }
 
   @override
-  Future<Environment> update(Environment environment) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<Environment> update(Environment environment) async {
+    await isar.isar!.writeTxn(() => isar.isar!.environments.put(environment));
+    return environment;
   }
+
+  @override
+  // TODO: implement observable
+  Stream<void> get observable => isar.isar!.environments.watchLazy();
 /* 
   @override
   Future<Environment> create(Environment environment) async {

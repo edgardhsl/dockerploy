@@ -86,7 +86,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
                       host,
                       encryptType,
                       context,
-                      envRepos,
+                      repositories,
                       saltMD5}) =>
                   b
                       ? prefix1.Environment(
@@ -96,8 +96,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
                           host: host,
                           protocol: protocol,
                           saltMD5: saltMD5,
-                          envRepos: envRepos,
-                          name: name)
+                          name: name,
+                          repositories: repositories)
                       : null,
               r'fromJson': (bool b) =>
                   (json) => b ? prefix1.Environment.fromJson(json) : null
@@ -125,16 +125,16 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {
               r'': (bool b) => (
-                      {idBackBranch,
-                      idBackRepository,
-                      idFrontBranch,
-                      idFrontRepository}) =>
+                      {idBranchFrontend,
+                      idBranchBackend,
+                      idFrontend,
+                      idBackend}) =>
                   b
                       ? prefix2.EnvRepos(
-                          idBackBranch: idBackBranch,
-                          idBackRepository: idBackRepository,
-                          idFrontBranch: idFrontBranch,
-                          idFrontRepository: idFrontRepository)
+                          idBackend: idBackend,
+                          idBranchBackend: idBranchBackend,
+                          idBranchFrontend: idBranchFrontend,
+                          idFrontend: idFrontend)
                       : null,
               r'fromJson': (bool b) =>
                   (json) => b ? prefix2.EnvRepos.fromJson(json) : null
@@ -459,15 +459,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.Reflector(), -1, 8, 8, const <int>[], const []),
         r.VariableMirrorImpl(r'context', 67240965, 0, const prefix0.Reflector(),
             -1, 7, 7, const <int>[], const []),
-        r.VariableMirrorImpl(r'envRepos', 134349829, 0,
+        r.VariableMirrorImpl(r'repositories', 134349829, 0,
             const prefix0.Reflector(), 1, 1, 1, const <int>[], const []),
-        r.VariableMirrorImpl(r'idFrontRepository', 67239941, 1,
+        r.VariableMirrorImpl(r'idFrontend', 67239941, 1,
             const prefix0.Reflector(), -1, 7, 7, const <int>[], const []),
-        r.VariableMirrorImpl(r'idFrontBranch', 67239941, 1,
+        r.VariableMirrorImpl(r'idBackend', 67239941, 1,
             const prefix0.Reflector(), -1, 7, 7, const <int>[], const []),
-        r.VariableMirrorImpl(r'idBackRepository', 67239941, 1,
+        r.VariableMirrorImpl(r'idBranchFrontend', 67239941, 1,
             const prefix0.Reflector(), -1, 7, 7, const <int>[], const []),
-        r.VariableMirrorImpl(r'idBackBranch', 67239941, 1,
+        r.VariableMirrorImpl(r'idBranchBackend', 67239941, 1,
             const prefix0.Reflector(), -1, 7, 7, const <int>[], const []),
         r.VariableMirrorImpl(r'user', 134349829, 2, const prefix0.Reflector(),
             -1, 6, 6, const <int>[], const []),
@@ -867,7 +867,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             #context),
         r.ParameterMirrorImpl(
-            r'envRepos',
+            r'repositories',
             67252230,
             57,
             const prefix0.Reflector(),
@@ -877,7 +877,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const [],
             null,
-            #envRepos),
+            #repositories),
         r.ParameterMirrorImpl(r'name', 134358022, 72, const prefix0.Reflector(),
             -1, 6, 6, const <int>[], const [], null, #name),
         r.ParameterMirrorImpl(
@@ -931,7 +931,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             #context),
         r.ParameterMirrorImpl(
-            r'envRepos',
+            r'repositories',
             134358022,
             72,
             const prefix0.Reflector(),
@@ -941,7 +941,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const [],
             null,
-            #envRepos),
+            #repositories),
         r.ParameterMirrorImpl(
             r'saltMD5',
             67253254,
@@ -981,7 +981,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'idBackBranch',
+            r'idBranchFrontend',
             67253254,
             88,
             const prefix0.Reflector(),
@@ -991,9 +991,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const [],
             null,
-            #idBackBranch),
+            #idBranchFrontend),
         r.ParameterMirrorImpl(
-            r'idBackRepository',
+            r'idBranchBackend',
             67253254,
             88,
             const prefix0.Reflector(),
@@ -1003,9 +1003,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const [],
             null,
-            #idBackRepository),
+            #idBranchBackend),
         r.ParameterMirrorImpl(
-            r'idFrontBranch',
+            r'idFrontend',
             67253254,
             88,
             const prefix0.Reflector(),
@@ -1015,9 +1015,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const [],
             null,
-            #idFrontBranch),
+            #idFrontend),
         r.ParameterMirrorImpl(
-            r'idFrontRepository',
+            r'idBackend',
             67253254,
             88,
             const prefix0.Reflector(),
@@ -1027,11 +1027,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const [],
             null,
-            #idFrontRepository),
+            #idBackend),
         r.ParameterMirrorImpl(r'json', 151126022, 89, const prefix0.Reflector(),
             -1, 13, 14, null, const [], null, null),
         r.ParameterMirrorImpl(
-            r'_idFrontRepository',
+            r'_idFrontend',
             67240038,
             81,
             const prefix0.Reflector(),
@@ -1043,7 +1043,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'_idFrontBranch',
+            r'_idBackend',
             67240038,
             83,
             const prefix0.Reflector(),
@@ -1055,7 +1055,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'_idBackRepository',
+            r'_idBranchFrontend',
             67240038,
             85,
             const prefix0.Reflector(),
@@ -1067,7 +1067,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'_idBackBranch',
+            r'_idBranchBackend',
             67240038,
             87,
             const prefix0.Reflector(),
@@ -1996,11 +1996,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'frontendPort': (dynamic instance) => instance.frontendPort,
         r'backendPort': (dynamic instance) => instance.backendPort,
         r'context': (dynamic instance) => instance.context,
-        r'envRepos': (dynamic instance) => instance.envRepos,
-        r'idFrontRepository': (dynamic instance) => instance.idFrontRepository,
-        r'idFrontBranch': (dynamic instance) => instance.idFrontBranch,
-        r'idBackRepository': (dynamic instance) => instance.idBackRepository,
-        r'idBackBranch': (dynamic instance) => instance.idBackBranch,
+        r'repositories': (dynamic instance) => instance.repositories,
+        r'idFrontend': (dynamic instance) => instance.idFrontend,
+        r'idBackend': (dynamic instance) => instance.idBackend,
+        r'idBranchFrontend': (dynamic instance) => instance.idBranchFrontend,
+        r'idBranchBackend': (dynamic instance) => instance.idBranchBackend,
         r'toMap': (dynamic instance) => instance.toMap,
         r'user': (dynamic instance) => instance.user,
         r'token': (dynamic instance) => instance.token,
@@ -2041,14 +2041,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'updatedAt': (dynamic instance) => instance.updatedAt
       },
       {
-        r'idFrontRepository=': (dynamic instance, value) =>
-            instance.idFrontRepository = value,
-        r'idFrontBranch=': (dynamic instance, value) =>
-            instance.idFrontBranch = value,
-        r'idBackRepository=': (dynamic instance, value) =>
-            instance.idBackRepository = value,
-        r'idBackBranch=': (dynamic instance, value) =>
-            instance.idBackBranch = value,
+        r'idFrontend=': (dynamic instance, value) =>
+            instance.idFrontend = value,
+        r'idBackend=': (dynamic instance, value) => instance.idBackend = value,
+        r'idBranchFrontend=': (dynamic instance, value) =>
+            instance.idBranchFrontend = value,
+        r'idBranchBackend=': (dynamic instance, value) =>
+            instance.idBranchBackend = value,
         r'id=': (dynamic instance, value) => instance.id = value,
         r'name=': (dynamic instance, value) => instance.name = value,
         r'fullName=': (dynamic instance, value) => instance.fullName = value,

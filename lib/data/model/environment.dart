@@ -22,7 +22,7 @@ class Environment {
   final int backendPort = Random().nextInt(1999) + 1000;
   final String? context;
 
-  final EnvRepos envRepos;
+  final EnvRepos repositories;
 
   Environment(
       {required this.name,
@@ -31,7 +31,7 @@ class Environment {
       this.host,
       this.encryptType,
       this.context,
-      required this.envRepos,
+      required this.repositories,
       this.saltMD5});
 
   Environment copyWith(
@@ -44,7 +44,7 @@ class Environment {
       int? port,
       int? randomPort,
       String? context,
-      EnvRepos? envRepos}) {
+      EnvRepos? repositories}) {
     return Environment(
         name: name ?? this.name,
         protocol: protocol ?? this.protocol,
@@ -53,7 +53,7 @@ class Environment {
         encryptType: encryptType ?? this.encryptType,
         saltMD5: saltMD5 ?? this.saltMD5,
         context: context ?? this.context,
-        envRepos: envRepos ?? this.envRepos);
+        repositories: repositories ?? this.repositories);
   }
 
   String getFrontEndUrl() {

@@ -6,7 +6,7 @@ class CustomFormBuilder<T> {
   final _reflector = const Reflector();
   final _formGroup = FormGroup({});
 
-  get formGroup => _formGroup;
+  FormGroup get formGroup => _formGroup;
 
   CustomFormBuilder();
 

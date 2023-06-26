@@ -8,17 +8,17 @@ part 'env_repos.g.dart';
 @Reflector()
 @embedded
 class EnvRepos {
-  String? idFrontRepository;
-  String? idFrontBranch;
+  String? idFrontend;
+  String? idBackend;
 
-  String? idBackRepository;
-  String? idBackBranch;
+  String? idBranchFrontend;
+  String? idBranchBackend;
 
   EnvRepos(
-      {this.idBackBranch,
-      this.idBackRepository,
-      this.idFrontBranch,
-      this.idFrontRepository});
+      {this.idBranchFrontend,
+      this.idBranchBackend,
+      this.idFrontend,
+      this.idBackend});
 
   factory EnvRepos.fromJson(Map<String, dynamic> json) =>
       _$EnvReposFromJson(json);

@@ -32,7 +32,7 @@ class SharedPreferences implements Storage {
     if (prefs == null) throw StorageNotInitializedException();
     if (prefs!.getString("name") == null) throw EnvironmentNotFoundException();
 
-    return Environment(name: "aaa", envRepos: EnvRepos());
+    return Environment(name: "aaa", repositories: EnvRepos());
   }
 
   @override

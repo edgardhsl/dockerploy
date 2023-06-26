@@ -37,31 +37,31 @@ const EnvironmentSchema = CollectionSchema(
       name: r'encryptType',
       type: IsarType.string,
     ),
-    r'envRepos': PropertySchema(
-      id: 4,
-      name: r'envRepos',
-      type: IsarType.object,
-      target: r'EnvRepos',
-    ),
     r'frontendPort': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'frontendPort',
       type: IsarType.long,
     ),
     r'host': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'host',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'name',
       type: IsarType.string,
     ),
     r'protocol': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'protocol',
       type: IsarType.string,
+    ),
+    r'repositories': PropertySchema(
+      id: 8,
+      name: r'repositories',
+      type: IsarType.object,
+      target: r'EnvRepos',
     ),
     r'saltMD5': PropertySchema(
       id: 9,
@@ -107,9 +107,6 @@ int _environmentEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 +
-      EnvReposSchema.estimateSize(
-          object.envRepos, allOffsets[EnvRepos]!, allOffsets);
   {
     final value = object.host;
     if (value != null) {
@@ -123,6 +120,9 @@ int _environmentEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 +
+      EnvReposSchema.estimateSize(
+          object.repositories, allOffsets[EnvRepos]!, allOffsets);
   {
     final value = object.saltMD5;
     if (value != null) {
@@ -142,16 +142,16 @@ void _environmentSerialize(
   writer.writeLong(offsets[1], object.backendPort);
   writer.writeString(offsets[2], object.context);
   writer.writeString(offsets[3], object.encryptType);
+  writer.writeLong(offsets[4], object.frontendPort);
+  writer.writeString(offsets[5], object.host);
+  writer.writeString(offsets[6], object.name);
+  writer.writeString(offsets[7], object.protocol);
   writer.writeObject<EnvRepos>(
-    offsets[4],
+    offsets[8],
     allOffsets,
     EnvReposSchema.serialize,
-    object.envRepos,
+    object.repositories,
   );
-  writer.writeLong(offsets[5], object.frontendPort);
-  writer.writeString(offsets[6], object.host);
-  writer.writeString(offsets[7], object.name);
-  writer.writeString(offsets[8], object.protocol);
   writer.writeString(offsets[9], object.saltMD5);
 }
 
@@ -165,15 +165,15 @@ Environment _environmentDeserialize(
     apiroot: reader.readStringOrNull(offsets[0]),
     context: reader.readStringOrNull(offsets[2]),
     encryptType: reader.readStringOrNull(offsets[3]),
-    envRepos: reader.readObjectOrNull<EnvRepos>(
-          offsets[4],
+    host: reader.readStringOrNull(offsets[5]),
+    name: reader.readString(offsets[6]),
+    protocol: reader.readStringOrNull(offsets[7]),
+    repositories: reader.readObjectOrNull<EnvRepos>(
+          offsets[8],
           EnvReposSchema.deserialize,
           allOffsets,
         ) ??
         EnvRepos(),
-    host: reader.readStringOrNull(offsets[6]),
-    name: reader.readString(offsets[7]),
-    protocol: reader.readStringOrNull(offsets[8]),
     saltMD5: reader.readStringOrNull(offsets[9]),
   );
   return object;
@@ -195,20 +195,20 @@ P _environmentDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
+      return (reader.readString(offset)) as P;
+    case 7:
+      return (reader.readStringOrNull(offset)) as P;
+    case 8:
       return (reader.readObjectOrNull<EnvRepos>(
             offset,
             EnvReposSchema.deserialize,
             allOffsets,
           ) ??
           EnvRepos()) as P;
-    case 5:
-      return (reader.readLong(offset)) as P;
-    case 6:
-      return (reader.readStringOrNull(offset)) as P;
-    case 7:
-      return (reader.readString(offset)) as P;
-    case 8:
-      return (reader.readStringOrNull(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     default:
@@ -1533,10 +1533,10 @@ extension EnvironmentQueryFilter
 
 extension EnvironmentQueryObject
     on QueryBuilder<Environment, Environment, QFilterCondition> {
-  QueryBuilder<Environment, Environment, QAfterFilterCondition> envRepos(
+  QueryBuilder<Environment, Environment, QAfterFilterCondition> repositories(
       FilterQuery<EnvRepos> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'envRepos');
+      return query.object(q, r'repositories');
     });
   }
 }
@@ -1876,12 +1876,6 @@ extension EnvironmentQueryProperty
     });
   }
 
-  QueryBuilder<Environment, EnvRepos, QQueryOperations> envReposProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'envRepos');
-    });
-  }
-
   QueryBuilder<Environment, int, QQueryOperations> frontendPortProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'frontendPort');
@@ -1906,6 +1900,12 @@ extension EnvironmentQueryProperty
     });
   }
 
+  QueryBuilder<Environment, EnvRepos, QQueryOperations> repositoriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'repositories');
+    });
+  }
+
   QueryBuilder<Environment, String?, QQueryOperations> saltMD5Property() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'saltMD5');
@@ -1924,7 +1924,8 @@ Environment _$EnvironmentFromJson(Map<String, dynamic> json) => Environment(
       host: json['host'] as String?,
       encryptType: json['encryptType'] as String?,
       context: json['context'] as String?,
-      envRepos: EnvRepos.fromJson(json['envRepos'] as Map<String, dynamic>),
+      repositories:
+          EnvRepos.fromJson(json['repositories'] as Map<String, dynamic>),
       saltMD5: json['saltMD5'] as String?,
     );
 
@@ -1937,5 +1938,5 @@ Map<String, dynamic> _$EnvironmentToJson(Environment instance) =>
       'encryptType': instance.encryptType,
       'saltMD5': instance.saltMD5,
       'context': instance.context,
-      'envRepos': instance.envRepos.toJson(),
+      'repositories': instance.repositories.toJson(),
     };

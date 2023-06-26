@@ -12,6 +12,9 @@ class IsarDatabase {
 
   Future<Isar?> initialize() async {
     final dir = await getApplicationDocumentsDirectory();
+
+    if (Isar.getInstance()?.isOpen != null) return null;
+
     isar = await Isar.open(
       [EnvironmentSchema],
       directory: dir.path,
