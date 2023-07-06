@@ -27,7 +27,7 @@ class _StartPageState extends State<StartPage> {
     return showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
+          return const Dialog(
             child: CreateEnvironment(),
           );
         });
@@ -58,62 +58,62 @@ class _StartPageState extends State<StartPage> {
         padding: const EdgeInsets.all(30),
         child: StreamBuilder(
             stream: envRepository.observable,
-            builder: (context, snapshot) => FutureBuilder(
-                  future: envRepository.list(),
-                  builder: (context, snapshot) {
-                    return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                "Ambientes (${snapshot.data?.length ?? 0})",
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
+            builder: (context, snapshot) {
+              return FutureBuilder(
+                future: envRepository.list(),
+                builder: (context, snapshot) {
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              "Ambientes (${snapshot.data?.length ?? 0})",
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                            const Spacer(),
-                            Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(children: [
-                                  TextButton.icon(
-                                    icon: const Icon(Icons.add),
-                                    label: const Text("Novo ambiente"),
-                                    onPressed: () {
-                                      _create(context);
+                          ),
+                          const Spacer(),
+                          Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(children: [
+                                TextButton.icon(
+                                  icon: const Icon(Icons.add),
+                                  label: const Text("Novo ambiente"),
+                                  onPressed: () => _create(context),
+                                )
+                              ]))
+                        ]),
+                        ScrollConfiguration(
+                            behavior: MyCustomScrollBehavior(),
+                            child: snapshot.data != null &&
+                                    snapshot.data!.isNotEmpty
+                                ? ListView.separated(
+                                    controller: _scrollBarController,
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data?.length ?? 0,
+                                    separatorBuilder: (context, index) =>
+                                        const Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Divider(
+                                          height: 1, color: Colors.white10),
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return EnvironmentCard(
+                                        env: snapshot.data!.elementAt(index),
+                                      );
                                     },
                                   )
-                                ]))
-                          ]),
-                          ScrollConfiguration(
-                              behavior: MyCustomScrollBehavior(),
-                              child: snapshot.data != null &&
-                                      snapshot.data!.isNotEmpty
-                                  ? ListView.separated(
-                                      controller: _scrollBarController,
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      itemCount: snapshot.data?.length ?? 0,
-                                      separatorBuilder: (context, index) =>
-                                          const Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Divider(
-                                            height: 1, color: Colors.white10),
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return EnvironmentCard(
-                                          env: snapshot.data!.elementAt(index),
-                                        );
-                                      },
-                                    )
-                                  : const Center(
-                                      child: Text(
-                                      "Iiiihhh, nenhum ambiente configurado ainda. 🥲",
-                                    )))
-                        ]);
-                  },
-                )),
+                                : const Center(
+                                    child: Text(
+                                    "Iiiihhh, nenhum ambiente configurado ainda. 🥲",
+                                  )))
+                      ]);
+                },
+              );
+            }),
       ),
     );
   }

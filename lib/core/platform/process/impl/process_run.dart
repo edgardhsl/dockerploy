@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dockerploy/core/platform/process/process.dart';
@@ -12,5 +14,12 @@ class ProcessRunner implements Process {
         .map((value) => ProcessResponse(
             stdOut: value.stdout as String, stdErr: value.stderr as String))
         .toList();
+  }
+
+  @override
+  Stream stream(String cmd) {
+    final controller = ShellLinesController(encoding: const Utf8Codec());
+    Shell(stdout: controller.sink).runExecutableArguments(cmd, []);
+    return controller.stream;
   }
 }

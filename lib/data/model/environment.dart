@@ -1,7 +1,6 @@
-import 'dart:math';
-
-import 'package:dockerploy/data/model/env_repos.dart';
 import 'package:dockerploy/core/util/reflector/reflector.dart';
+import 'package:dockerploy/data/model/docker_compose.dart';
+import 'package:dockerploy/data/model/env_repos.dart';
 import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -11,61 +10,107 @@ part 'environment.g.dart';
 @Reflector()
 @collection
 class Environment {
-  final Id? id = Isar.autoIncrement;
   final String name;
-  final String? protocol;
-  final String? apiroot;
-  final String? host;
-  final String? encryptType;
-  final String? saltMD5;
-  final int frontendPort = Random().nextInt(1999) + 1000;
-  final int backendPort = Random().nextInt(1999) + 1000;
-  final String? context;
-
   final EnvRepos repositories;
+
+  Id? id;
+
+  final Frontend frontend;
+  final Backend backend;
+
+  @ignore
+  final DockerCompose? dockerCompose;
+
+  String? dir;
 
   Environment(
       {required this.name,
-      this.protocol,
-      this.apiroot,
-      this.host,
-      this.encryptType,
-      this.context,
       required this.repositories,
-      this.saltMD5});
+      required this.frontend,
+      required this.backend,
+      this.dir,
+      this.dockerCompose});
 
-  Environment copyWith(
-      {String? name,
-      String? protocol,
-      String? apiroot,
-      String? host,
-      String? encryptType,
-      String? saltMD5,
-      int? port,
-      int? randomPort,
-      String? context,
-      EnvRepos? repositories}) {
+  Environment copyWith({
+    String? name,
+    Frontend? frontend,
+    Backend? backend,
+    String? dir,
+    EnvRepos? repositories,
+    DockerCompose? dockerCompose,
+  }) {
     return Environment(
-        name: name ?? this.name,
-        protocol: protocol ?? this.protocol,
-        apiroot: apiroot ?? this.apiroot,
-        host: host ?? this.host,
-        encryptType: encryptType ?? this.encryptType,
-        saltMD5: saltMD5 ?? this.saltMD5,
-        context: context ?? this.context,
-        repositories: repositories ?? this.repositories);
+      name: name ?? this.name,
+      dir: dir ?? this.dir,
+      repositories: repositories ?? this.repositories,
+      frontend: frontend ?? this.frontend,
+      backend: backend ?? this.backend,
+      dockerCompose: dockerCompose ?? this.dockerCompose,
+    );
   }
 
-  String getFrontEndUrl() {
-    return "$protocol://$host:$frontendPort";
-  }
+  String getFrontEndUrl() =>
+      "${frontend.protocol}://${frontend.host}:${frontend.port}";
 
-  String getBackEndUrl() {
-    return "$protocol://$host:$backendPort/$context";
-  }
+  String getBackEndUrl() =>
+      "${backend.protocol}://${backend.host}:${backend.port}/${backend.context}";
 
   factory Environment.fromJson(Map<String, dynamic> json) =>
       _$EnvironmentFromJson(json);
 
   Map<String, dynamic> toJson() => _$EnvironmentToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+@Reflector()
+@embedded
+class Frontend {
+  final String? protocol;
+  final String? apiroot;
+  final String? host;
+  final String? encryptType;
+  final String? saltMD5;
+  final int? port;
+  String? context;
+
+  Frontend(
+      {this.protocol,
+      this.apiroot,
+      this.host,
+      this.encryptType,
+      this.saltMD5,
+      this.port});
+
+  factory Frontend.fromJson(Map<String, dynamic> json) =>
+      _$FrontendFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FrontendToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+@Reflector()
+@embedded
+class Backend {
+  final String? protocol;
+  final String? host;
+  final String? database;
+  final String? dbuser;
+  final String? dbpass;
+  final String? lgBaseAntiga;
+  final int? port;
+  String? context;
+
+  Backend(
+      {this.protocol,
+      this.host,
+      this.database,
+      this.dbuser,
+      this.dbpass,
+      this.lgBaseAntiga,
+      this.port});
+
+  factory Backend.fromJson(Map<String, dynamic> json) =>
+      _$BackendFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BackendToJson(this);
 }

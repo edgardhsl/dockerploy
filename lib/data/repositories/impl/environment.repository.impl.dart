@@ -14,6 +14,7 @@ class EnvironmentRepositoryImpl implements EnvironmentRepository {
 
   @override
   Future<Environment> create(Environment environment) async {
+    environment.id = environment.id == 0 ? Isar.autoIncrement : environment.id;
     await isar.isar!.writeTxn(() => isar.isar!.environments.put(environment));
     return environment;
   }
@@ -42,7 +43,6 @@ class EnvironmentRepositoryImpl implements EnvironmentRepository {
   }
 
   @override
-  // TODO: implement observable
   Stream<void> get observable => isar.isar!.environments.watchLazy();
 /* 
   @override

@@ -19,7 +19,4 @@ class GithubRepoRepositoryImpl implements GithubRepoRepository {
 
     return repositories;
   }
-
-  @override
-  Stream get observable => throw UnimplementedError();
 }

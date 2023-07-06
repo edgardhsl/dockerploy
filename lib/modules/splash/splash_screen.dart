@@ -3,7 +3,6 @@ import 'package:dockerploy/core/storage/exceptions/environment_not_found.excepti
 import 'package:dockerploy/core/storage/storage.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:isar/isar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:dockerploy/core/builders/form/formgroup.builder.dart';
 import 'package:dockerploy/core/database/isar/isar.impl.dart';
+import 'package:dockerploy/core/platform/docker/docker_compose.builder.dart';
 import 'package:dockerploy/data/model/environment.dart';
 import 'package:dockerploy/data/model/github_repo.dart';
 import 'package:dockerploy/data/repositories/environment.repository.dart';
@@ -11,9 +14,9 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class CreateEnvironment extends StatefulWidget {
-  Environment? environment;
+  final Environment? environment;
 
-  CreateEnvironment({super.key, this.environment});
+  const CreateEnvironment({super.key, this.environment});
 
   @override
   State<CreateEnvironment> createState() => _CreateEnvironmentState();
@@ -56,9 +59,10 @@ class _CreateEnvironmentState extends State<CreateEnvironment> {
             spacing: 20,
             runSpacing: 20,
             children: [
-              const Text(
-                "Criar novo ambiente",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                "${widget.environment!.id == 0 || widget.environment!.id == null ? "Criar novo" : "Editar"} ambiente",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 40,
@@ -174,8 +178,8 @@ class _CreateEnvironmentState extends State<CreateEnvironment> {
     return FutureBuilder<List<GithubRepo>>(
         future: dataFetch,
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            snapshot.data!.sort((a, b) => a.name.compareTo(b.name));
           }
 
           return ReactiveDropdownField<String>(
@@ -204,29 +208,34 @@ class _CreateEnvironmentState extends State<CreateEnvironment> {
         });
   }
 
-  _save(BuildContext context) {
-    SnackBar snackBar;
-    Navigator.pop(context);
+  _save(BuildContext context) async {
+    Modular.to.pop();
     try {
-      formGroup.control('id').value = 0;
-
       Environment environment = Environment.fromJson(formGroup.rawValue);
+      final dockerCompose = DockerComposeBuilder(environment: environment);
 
-      environmentRepository.create(environment);
-
-      if (environment.id == 0) throw "";
-
-      //if (!context.mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: Colors.green,
-        content: Text('Ambiente criado com sucesso!'),
-      ));
+      environmentRepository.create(environment).then((v) {
+        print(v.toJson());
+        dockerCompose.build();
+        _onSuccess();
+      }).catchError((e) => _onError(e));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: const Text('Houve um erro ao criar o ambiente.'),
-      ));
+      _onError(e);
     }
+  }
+
+  _onSuccess() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      backgroundColor: Colors.green,
+      content: Text('Ambiente criado com sucesso!',
+          style: TextStyle(color: Colors.white)),
+    ));
+  }
+
+  _onError(e) async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        content:
+            Text(e.toString(), style: const TextStyle(color: Colors.white))));
   }
 }

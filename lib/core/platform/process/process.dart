@@ -1,6 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 abstract class Process {
   Future<List<ProcessResponse>> cmd(String cmd);
+  Stream stream(String cmd);
 }
 
 class ProcessResponse {

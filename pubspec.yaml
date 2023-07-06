@@ -14,7 +14,8 @@ dependencies:
   http: any
   isar: 3.1.0
   isar_flutter_libs: 3.1.0
-  json_annotation: any
+  json_annotation: any  
+  meta: any
   path_provider: any
   process_run: any
   reactive_dropdown_search: any
@@ -22,7 +23,12 @@ dependencies:
   reflectable: any
   shared_preferences: any
   simple_icons: any
-  styled_widget: any
+  styled_widget: any  
+  faker:
+  rxdart: 
+  network_info_plus:
+  yaml:
+  url_launcher: ^6.1.11
   flutter: 
     sdk: flutter
   window_size: 

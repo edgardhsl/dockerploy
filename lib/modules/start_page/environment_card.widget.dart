@@ -2,6 +2,7 @@ import 'package:dockerploy/modules/start_page/create/create_environment.widget.d
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:dockerploy/data/model/environment.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EnvironmentCard extends StatelessWidget {
   final Environment env;
@@ -32,12 +33,15 @@ class EnvironmentCard extends StatelessWidget {
                 ),
                 Text(env.name),
                 const Spacer(),
+                Column(
+                  children: [Text(env.getFrontEndUrl())],
+                ),
+                const Spacer(),
                 IconButton(
                     onPressed: () => _edit(context, env),
-                    icon: Icon(
-                      Icons.edit_square,
-                      fill: 1,
-                      weight: 1,
+                    icon: const Icon(
+                      Icons.edit,
+                      size: 18,
                     )),
                 IconButton(
                     onPressed: () {}, icon: const Icon(Icons.manage_search)),
@@ -45,6 +49,11 @@ class EnvironmentCard extends StatelessWidget {
                   color: Colors.white,
                   icon: const Icon(Icons.play_arrow),
                   onPressed: () {},
+                ),
+                IconButton(
+                  color: Colors.white,
+                  icon: const Icon(Icons.open_in_browser),
+                  onPressed: () => launchUrl(Uri.file(env.dir!, windows: true)),
                 ),
               ],
             ))
